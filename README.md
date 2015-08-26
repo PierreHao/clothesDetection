@@ -5,3 +5,6 @@ Created by Tingwu Wang, since the internship in SenseTime and CUHK.
 ### Introduction
 
 It is a framework for clothes detection and attribute retrieving.
+
+
+### Retrieval
