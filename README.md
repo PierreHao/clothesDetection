@@ -22,7 +22,7 @@ In a word, the config.py must correspond with the prototxt. Otherwise errors wil
 
 In the existing work, several kinds of training is finished.
 
-1. The training of **three class** detector.
+### The training of **three class** detector.
 
 It is most basic model.
 
@@ -68,7 +68,7 @@ And the `_train` suffix is simply of historical reasons.
 
 Other available datasets are the CFD, Fashionista, CCP dataset. The available datasets are recorded at the $FashionAI/data/DB_info.
 
-2. The training of **multi_attributive** detector.
+### The training of **multi_attributive** detector.
 
 In this part, the detecting of sleeve, neckband and texture attributives is added.
 The major part of the training is similar. 
@@ -113,7 +113,7 @@ In this case, the proposals will only be determined as positive example for the 
   
 **Note**: Only the JD dataset is labeled with its attributive. The CFD, CCP, Fashionista do not support multi attributive labels.
 
-3. The training of **multi_attributive_softmax** detector.
+### The training of **multi_attributive_softmax** detector.
 
 It is basicly the same with the second one, only different in that it uses a different network.
 
@@ -125,7 +125,26 @@ __C.MULTI_LABEL_SOFTMAX = True
 
 and trains the network by modifying the `$FashionAI/model/multi_ClothCaffeNet/train_1fc_pool5_multilabel/solver.prototxt` to use the test_3_softmax_multilabel.prototxt at the same directory.
 
+### Training by using the hdf5
+
+This function might have some problem in the CFD, CCP, and Fashionista part.
+The idea is very simple, we use the **get_training_roidb_hdf5.py** to generate the hdf5 dataset.
+
+It is simply a change from the Ross' original python port to the caffe port. 
+Reading the prototxt in the `$FashionAI/model/hdf5_ClothCaffeNet/train_1fc_pool5_multilabel/solver.prototxt`,
+and you will find it quite easy to understand what is going on.
+
 ## Test the network
+
+It is worthing noting that the config.py should be the same for the training and the testing. 
+And for the record, the testing scale and the training scale configuration in the config.py should always insist the same (600 for test, then 600 for train or 350, 350 for example).
+
+**Note**: Testing is basicly mirroring the operation done in the training part.
+We change the prototxt, switching to the corresponding computed model and make sure the config.py is the same in the testing and the training.
+
+### testing the a dataset
+
+Before testing the dataset, we need to generate the proposals.
 
 ## Data
 
