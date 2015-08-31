@@ -232,27 +232,35 @@ There are many models and datasets available currently in the projects.
 In the `$FashionAI/output/default/` there are many available trained models.
 
 1. invalid_1fc_multilabel_lose_clothesDataset_train_3CL=True_MUL_LAB=True_FG_THRESH=0.5_23_class:
+
 	Run with `multi_ClothCaffeNet/train_1fc_pool5_multilabel.prototxt`
 
 2. valid_clothesDataset_3CL=True_BLC=True_COF=True_TT1000=True:
+
 	Run with `ClothCaffeNet/train.prototxt`
 
 3. valid_clothesDataset_train_3CL=True_MUL_LAB=True_SOFTMAX=True_FG_THRESH=0.5
+
 	Run with `ClothCaffeNet/train_3_softmax_multilabel`
 
 4. valid_clothesDataset_3CL=True_MUL_LAB=True_SOFTMAX=False_FG_THRESH=0.5
+
 	Run with `multi_ClothCaffeNet/train_1fc_pool5_multilabel.prototxt`. It fixes the 23 class bug
 
 5. valid_bg_bug_removed_clothesDataset_train_3CL=True_MUL_LAB=True_SOFTMAX=False_FG_THRESH=0.5
+
 	Run with `multi_ClothCaffeNet/train_1fc_pool5_multilabel` It fixes the 23 class bug, and the bg attributive bug.
 
 6. valid.5_clothesDataset_3CL=True_MUL_LAB=True_SOFTMAX=False_FG_THRESH=0.5ATTR_REVISE=True
+
 	Run with `multi_ClothCaffeNet/train_1fc_pool5_multilabel.prototxt`. It uses a better way to choose the bg.
 
 7. valid.6_clothesDataset_3CL=True_MUL_LAB=True_SOFTMAX=True_FG_THRESH=0.5ATTR_REVISE=True
+
 	Run with `multi_ClothCaffeNet/train_3_softmax_multilabel.prototxt`. It uses a better way to choose the bg.
 
 8. clothesDataset_3CL=True_BLC=True_COF=True_TT1000=True
+
 	Run with `ClothCaffeNet/train.prototxt`. It is the most stable version 1 model.
   		
 
