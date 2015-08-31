@@ -223,11 +223,21 @@ mkdir images
 In this case, you simply set the `--testset` to a directory containing the images. The proposals are generated on-the-fly, and will not be saved.
 It is convenient, but more time-consuming.
 
+## Demo
+
+To run the demo, run the following
+
+```shell
+python $FashionAI/tools/three_demo.py --image /home/twwang/1.jpg --version 2
+```
+
+The `--version` could be 1 or 2, where 1 for the old three class model, and 2 for the newly fintuned one.
+
 ## Data
 
 There are many models and datasets available currently in the projects.
 
-### the finished Model
+### The finished Model
 
 In the `$FashionAI/output/default/` there are many available trained models.
 
@@ -262,8 +272,36 @@ In the `$FashionAI/output/default/` there are many available trained models.
 8. clothesDataset_3CL=True_BLC=True_COF=True_TT1000=True
 
 	Run with `ClothCaffeNet/train.prototxt`. It is the most stable version 1 model.
-  		
 
-### the dataset data
+9. The imageNet model
+
+	The imageNet model, used to be finetune is stored in `$FashionAI/data/fast_rcnn_models`
+
+### The dataset
+
+#### Jingdong datasets
+
+It is the biggest one, with more than 39000 available annotated data. The images are stored in 26 separate files.
+There is a mapping files called `GUIDMAPPING.txt` in each directory. 
+The image names and the label file names are given in the mapping files.
+
+The training set and the testing set has different `GUIDMAPPING.txt`.
+
+#### CCP, CFD and Fashionista
+
+These datasets are processed to similar structure, where the images.jpg are stored in `/images`,
+and the same-name proposal data (also named *.jpg for convenience) are placed in the `/bounding_box` dir.
 
 ## Misc
+
+### Feature_show
+
+A demo python script for showing the trained feature of single image is written. But the function is not updated.
+see `feature_show.py` in the `$FashionAI/tools/`.
+
+### Plot the ROC curve
+
+In the `$FashionAI/tools/`, the `test_ROC.m` is the matlab script for generating the test results curve.
+**Note** the `forever21` test is not updated, and may have errors.
+It is strongly recommended that you should check the code before running the code.
+The lib for the matlab code is stored in the `$FashionAI/lib/matlab_lib`
