@@ -142,9 +142,77 @@ And for the record, the testing scale and the training scale configuration in th
 **Note**: Testing is basicly mirroring the operation done in the training part.
 We change the prototxt, switching to the corresponding computed model and make sure the config.py is the same in the testing and the training.
 
-### testing the a dataset
+### generating the proposals
 
 Before testing the dataset, we need to generate the proposals.
+
+The c++ code for generating the proposals is located at the `$FashionAI/rcnn_test/test`. And you should modify the code for specific purpose, as most of the codes have been written for specific ones. The `CCPCFD_proposals.cpp` is written to process a image directory in the following style.
+
+```shell
+cd $FashionAI/rcnn_test
+./bin/CCPCFD_proposals.bin $INPUT_IMAGE_DIR
+```
+
+Then a proposals directory will be generating at the same directory tree
+
+```c++
+if (argc <= 1) printf("Error, must have the root path\n");
+string ROOT_DIR = string(argv[1]);
+string IMAGE_DIR = ROOT_DIR;
+string PPS_DIR = ROOT_DIR + "/.." + "/proposals";
+```
+
+### Testing the datasets
+
+After generating the datasets (which is already finished in all the datasets), you could continue with the testing.
+
+A basic example of testing the dataset looks like this
+
+```shell
+$FashionAI/tools/generate_test.py --gpu 1 
+--model $FashionAI/output/default/clothesDataset_train_3CL=True_MUL_LAB=True_SOFTMAX=True_FG_THRESH=0.5ATTR_REVISE=False_SEP_DETECTOR=1/caffenet_fast_rcnn_iter_40000.caffemodel 
+--prototxt $FashionAImodels/ClothCaffeNet_binDetector/test_bin_softmax_multilabel.prototxt --testset Jingdong
+```
+
+you could change the `--model` and the `--prototxt` according to your own need. 
+But the other arguments are tricky, and modification of the code is needed.
+
+The `--testset` arguments take the input datasets as arguments. 
+Currently the `Jingdong` and `forever21` (It's actually the CCP dataset when I say forever21, I got mistaken about the name of the dataset) are supported.
+And a special `general` dataset is implemented too as described below.
+
+#### The Jingdong Dataset
+
+The `Jingdong` dataset are read and the results are saved like
+
+```python
+Jingdong_root_dir = '/media/DataDisk/twwang/fast-rcnn/data/clothesDataset/test'
+Jingdong_output_dir = '/media/DataDisk/twwang/fast-rcnn/data/results/Jingdong'
+```
+
+If you are testing a new model and do not want to **overwrite** the old results, you will need to change the `Jingdong_output_dir`.
+For example, a new output directory could be like `$FashionAI/data/results/$NEW_Jingdong_DIR`. 
+And make sure to add subdirectories for saving the image demos, i.e., the images with the detected boxes ploted on it. 
+
+```shell
+cd $FashionAI/data/results/$NEW_Jingdong_DIR
+mkdir images
+for ((i=1;i<=26;i++))
+do
+mkdir $i
+done
+```
+
+#### The forever21 dataset
+
+The `forever21` is similar. But the directory tree is different,
+as the CCP dataset is small and images are put in the same directory (not like Jingdong one with 26 separate dirs).
+
+```shell
+cd $FashionAI/data/results/$NEW_CCP_DIR
+mkdir images
+```
+
 
 ## Data
 
